@@ -2,8 +2,8 @@
 declare type Func<A, R> = (...args: A) => R;
 
 declare type Calls<A, R> = Array<
-  | { this: any, arguments: A, returns: R }
-  | { this: any, arguments: A, error: any }
+  | { this: any, arguments: A, return: R }
+  | { this: any, arguments: A, throw: any }
 >;
 
 declare type Stub<A, R> = Func<A, R> & { calls: Calls<A, R> };

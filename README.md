@@ -188,6 +188,24 @@ let s = n.spy(object, 'method');
 object.method = s.original;
 ```
 
+## API
+
+Here is the basic API interface (simplified from `index.js.flow`):
+
+```ts
+type Call =
+  | { this: any, arguments: Array<any>, return: any }
+  | { this: any, arguments: Array<any>, throw: any }; // when an error was thrown
+
+type Stub = Function & { calls: Array<Call> };
+type Spy = Function & { calls: Array<Call>, original: Function };
+
+declare function ninos(test: AvaTest): {
+  stub(inner?: Function): Stub;
+  spy(object: Object, method: string, inner?: Function): Spy;
+}
+```
+
 ## Design
 
 Niños tries to keep things as miminal as possible. So it avoids APIs like:

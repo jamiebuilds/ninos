@@ -27,6 +27,9 @@ test('n.stub()', t => {
   t.throws(() => {
     s.call('t4', 'a4');
   });
+
+  t.is(s.calls[3].return, undefined);
+  t.true(s.calls[3].throw instanceof Error);
 });
 
 function method(arg) {

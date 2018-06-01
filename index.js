@@ -26,7 +26,7 @@ function ninos(test) {
         calls.push({
           this: this,
           arguments: args,
-          error: err,
+          throw: err,
         });
         throw err;
       }
@@ -54,7 +54,7 @@ function ninos(test) {
         calls.push({
           this: this,
           arguments: args,
-          error: err,
+          throw: err,
         });
         throw err;
       }
