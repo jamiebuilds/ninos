@@ -1,0 +1,28 @@
+{
+  "name": "ninos",
+  "version": "0.0.0",
+  "description": "Simple stubbing/spying for Ava",
+  "main": "index.js",
+  "repository": "https://github.com/jamiebuilds/ninos",
+  "author": "Jamie Kyle <me@thejameskyle.com>",
+  "license": "MIT",
+  "keywords": [
+    "ava",
+    "stub",
+    "spy",
+    "mock",
+    "sinon"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "ava"
+  },
+  "peerDependencies": {
+    "ava": "^0.25.0"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0"
+  }
+}
