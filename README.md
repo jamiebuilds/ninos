@@ -41,7 +41,7 @@ test('api.getCurrentUser()', t => {
 
   await api.getCurrentUser();
 
-  t.deepEqual(s.calls[0].args[0], {
+  t.deepEqual(s.calls[0].arguments[0], {
     method: 'GET',
     url: '/api/v1/user',
   });
