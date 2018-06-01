@@ -14,7 +14,9 @@
     "sinon"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "index.js.flow",
+    "index.d.ts"
   ],
   "scripts": {
     "test": "ava"
@@ -23,6 +25,7 @@
     "ava": "^0.25.0"
   },
   "devDependencies": {
-    "ava": "^0.25.0"
+    "ava": "^0.25.0",
+    "flow-bin": "^0.73.0"
   }
 }

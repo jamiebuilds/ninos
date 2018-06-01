@@ -1,3 +1,5 @@
+// @flow
+'use strict';
 const test = require('ava');
 const ninos = require('./');
 const EventEmitter = require('events');
@@ -27,7 +29,7 @@ test('n.stub()', t => {
   });
 });
 
-function method() {
+function method(arg) {
   return 'r2';
 }
 

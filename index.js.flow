@@ -1,0 +1,24 @@
+// @flow
+declare type Func<A, R> = (...args: A) => R;
+
+declare type Calls<A, R> = Array<
+  | { this: any, arguments: A, returns: R }
+  | { this: any, arguments: A, error: any }
+>;
+
+declare type Stub<A, R> = Func<A, R> & { calls: Calls<A, R> };
+declare type Spy<F, A, R> = Func<A, R> & { calls: Calls<A, R>, original: F };
+
+declare interface INinos {
+  stub<A>(): Stub<A, void>;
+  stub<A, R>(inner: Func<A, R>): Stub<A, R>;
+
+  spy<F, A>(object: Object, method: string): Spy<F, A, void>;
+  spy<F, A, R>(object: Object, method: string, inner: Func<A, R>): Spy<F, A, R>;
+}
+
+declare interface ITest {
+  afterEach(Function): any;
+}
+
+declare module.exports: (test: ITest) => INinos;
