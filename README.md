@@ -1,6 +1,6 @@
 # Niños
 
-> Simple stubbing/spying for [Ava](https://ava.li)
+> Simple stubbing/spying for [AVA](https://ava.li)
 
 ## Example
 
@@ -58,7 +58,7 @@ yarn add --dev ninos
 
 #### `ninos()`
 
-This method setups the `n.stub()` and `n.spy()` functions. It hooks into Ava to
+This method setups the `n.stub()` and `n.spy()` functions. It hooks into AVA to
 automatically restore spies after each test.
 
 ```js
@@ -243,4 +243,4 @@ If you prefer the former, Sinon is the library for you.
 
 ---
 
-> **Note:** This is part of a [proposal to add stubs/spies to Ava itself](https://github.com/avajs/ava/issues/1825)
+> **Note:** This is part of a [proposal to add stubs/spies to AVA itself](https://github.com/avajs/ava/issues/1825)
