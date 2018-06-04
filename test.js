@@ -1,13 +1,16 @@
 // @flow
 'use strict';
-const test = require('ava');
-const ninos = require('./');
+const test = require('./')(require('ava'));
 const EventEmitter = require('events');
 
-const n = ninos(test);
+function method(arg) {
+  return 'r2';
+}
 
-test('n.stub()', t => {
-  let s = n.stub((...args) => {
+let object = { method };
+
+test('t.context.stub()', t => {
+  let s = t.context.stub((...args) => {
     if (s.calls.length === 0) { t.deepEqual(args, ['a1']); return 'r1'; }
     if (s.calls.length === 1) { t.deepEqual(args, ['a2']); return 'r2'; }
     if (s.calls.length === 2) { t.deepEqual(args, ['a3']); return 'r3'; }
@@ -32,14 +35,8 @@ test('n.stub()', t => {
   t.true(s.calls[3].throw instanceof Error);
 });
 
-function method(arg) {
-  return 'r2';
-}
-
-let object = { method };
-
-test('n.spy()', t => {
-  let s = n.spy(object, 'method', (...args) => {
+test('t.context.spy()', t => {
+  let s = t.context.spy(object, 'method', (...args) => {
     if (s.calls.length === 0) { t.deepEqual(args, ['a1']); return 'r1'; }
     if (s.calls.length === 1) { t.deepEqual(args, ['a2']); return s.original(...args); }
     if (s.calls.length === 2) { t.deepEqual(args, ['a3']); return 'r3'; }
@@ -59,6 +56,6 @@ test('n.spy()', t => {
   ]);
 });
 
-test('t.spy() restored after test', t => {
+test('t.context.spy() restored after test', t => {
   t.is(object.method, method);
 });

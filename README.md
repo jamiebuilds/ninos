@@ -7,18 +7,17 @@
 **Setup**
 
 ```js
-const test = require('ava');
-const n = require('ninos')(test);
+const test = require('ninos')(require('ava'));
 ```
 
-**n.stub()**
+**t.context.stub()**
 
 ```js
 const EventEmitter = require('events');
 
 test('EventEmitter', t => {
   let e = new EventEmitter();
-  let s = n.stub();
+  let s = t.context.stub();
   e.on('event', s);
 
   e.emit('event');
@@ -29,13 +28,13 @@ test('EventEmitter', t => {
 });
 ```
 
-**n.spy()**
+**t.context.spy()**
 
 ```js
 const api = require('./api');
 
 test('api.getCurrentUser()', t => {
-  let s = n.spy(api, 'request', () => {
+  let s = t.context.spy(api, 'request', () => {
     return Promise.resolve({ id: 42 });
   });
 
@@ -58,26 +57,21 @@ yarn add --dev ninos
 
 #### `ninos()`
 
-This method setups the `n.stub()` and `n.spy()` functions. It hooks into AVA to
-automatically restore spies after each test.
+This method setups the `t.context.stub()` and `t.context.spy()` functions. It
+hooks into AVA to automatically restore spies after each test.
 
 ```js
-const test = require('ava');
-const ninos = require('ninos');
-
-const n = ninos(test);
-
-console.log(n); // { stub: [Function], spy: [Function] }
+const test = require('ninos')(require('ava'));
 ```
 
-#### `n.stub()`
+#### `t.context.stub()`
 
 Call this method to create a function that you can use in place of any other
 function (as a callback/etc).
 
 ```js
 test('example', t => {
-  let s = n.stub(); // [Function]
+  let s = t.context.stub(); // [Function]
 });
 ```
 
@@ -85,7 +79,7 @@ On that function is a `calls` property which is an array of all the calls you
 made.
 
 ```js
-let s = n.stub();
+let s = t.context.stub();
 
 s.call('this', 'arg1', 'arg2');
 
@@ -98,7 +92,7 @@ You can optional pass an inner function to be called inside the stub to
 customize its behavior.
 
 ```js
-let s = n.stub((...args) => {
+let s = t.context.stub((...args) => {
   return 'hello!';
 });
 
@@ -113,7 +107,7 @@ If you want to customize the behavior based on the current call you can use
 `s.calls`.
 
 ```js
-let s = n.stub((...args) => {
+let s = t.context.stub((...args) => {
   if (s.calls.length === 0) return 'one';
   if (s.calls.length === 1) return 'two';
   if (s.calls.length === 2) return 'three';
@@ -126,7 +120,7 @@ t.is(s(), 'three');
 t.throws(() => s()); // Error: too many calls!
 ```
 
-#### `n.spy()`
+#### `t.context.spy()`
 
 If you need to write tests against a method on an object, you should use a spy
 instead of a stub.
@@ -135,13 +129,13 @@ instead of a stub.
 let method = () => 'hello from method';
 let object = { method };
 
-let s = n.spy(object, 'method');
+let s = t.context.spy(object, 'method');
 ```
 
 Just like stubs, spies have a `calls` property.
 
 ```js
-let s = n.spy(object, 'method');
+let s = t.context.spy(object, 'method');
 
 object.method.call('this', 'arg1', 'arg2');
 
@@ -154,7 +148,7 @@ By default, spies will call the original function. If you want to customize the
 behavior you can pass your own inner function.
 
 ```js
-let s = n.spy(object, 'method', (...args) => {
+let s = t.context.spy(object, 'method', (...args) => {
   return 'hello from spy'
 });
 
@@ -169,7 +163,7 @@ If you still want access to the original function you can find it on
 `s.original`.
 
 ```js
-let s = n.spy(object, 'method', (...args) => {
+let s = t.context.spy(object, 'method', (...args) => {
   return s.original(...args) + ' and hello from spy';
 });
 
@@ -184,13 +178,13 @@ Spies will automatically be restored at the end of your test, but if you want
 to do it yourself:
 
 ```js
-let s = n.spy(object, 'method');
+let s = test.context.spy(object, 'method');
 object.method = s.original;
 ```
 
 ## API
 
-Here is the basic API interface (simplified from `index.js.flow`):
+Here is the basic API interface:
 
 ```ts
 type Call =
@@ -199,11 +193,6 @@ type Call =
 
 type Stub = Function & { calls: Array<Call> };
 type Spy = Function & { calls: Array<Call>, original: Function };
-
-declare function ninos(test: AvaTest): {
-  stub(inner?: Function): Stub;
-  spy(object: Object, method: string, inner?: Function): Spy;
-}
 ```
 
 ## Design
@@ -211,7 +200,7 @@ declare function ninos(test: AvaTest): {
 Niños tries to keep things as miminal as possible. So it avoids APIs like:
 
 ```js
-let s = t.stub();
+let s = t.context.stub();
 
 s.onCall(0).returns('ret1');
 s.onCall(1).returns('ret2');
@@ -227,7 +216,7 @@ Instead you should write tests like this:
 
 ```js
 test('example', t => {
-  let s = n.stub(() => {
+  let s = t.context.stub(() => {
     if (s.calls.length === 0) return 'ret1';
     if (s.calls.length === 1) return 'ret2';
   });
