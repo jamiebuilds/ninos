@@ -1,6 +1,6 @@
 {
   "name": "ninos",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Simple stubbing/spying for Ava",
   "main": "index.js",
   "repository": "https://github.com/jamiebuilds/ninos",
