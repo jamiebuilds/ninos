@@ -3,7 +3,7 @@
 function ninos(test) {
   const spies = Symbol('spies');
 
-  test.beforeEach(() => {
+  test.beforeEach(t => {
     t.context[spies] = [];
 
     t.context.stub = inner => {
@@ -66,7 +66,7 @@ function ninos(test) {
     };
   });
 
-  test.afterEach(() => {
+  test.afterEach(t => {
     t.context[spies].forEach(({ object, method, original }) => {
       object[method] = original;
     });
