@@ -33,6 +33,8 @@ test('t.context.stub()', t => {
 
   t.is(s.calls[3].return, undefined);
   t.true(s.calls[3].throw instanceof Error);
+
+  t.throws(s)
 });
 
 test('t.context.spy()', t => {
@@ -54,6 +56,8 @@ test('t.context.spy()', t => {
     { this: 't2', arguments: ['a2'], return: 'r2' },
     { this: 't3', arguments: ['a3'], return: 'r3' },
   ]);
+
+  t.is(object.method(), 'r2')
 });
 
 test('t.context.spy() restored after test', t => {
