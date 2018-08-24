@@ -13,11 +13,13 @@ function ninos(test) {
 
       function stub(...args) {
         try {
+          const val = inner.call(this, ...args);
           calls.push({
             this: this,
             arguments: args,
-            return: inner.call(this, ...args),
+            return: val,
           });
+          return val;
         } catch (err) {
           calls.push({
             this: this,
@@ -41,11 +43,13 @@ function ninos(test) {
 
       function spy(...args) {
         try {
+          const val = inner.call(this, ...args);
           calls.push({
             this: this,
             arguments: args,
-            return: inner.call(this, ...args),
+            return: val,
           });
+          return val;
         } catch (err) {
           calls.push({
             this: this,
