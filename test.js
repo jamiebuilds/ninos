@@ -1,7 +1,6 @@
 // @flow
 'use strict';
 const test = require('./')(require('ava'));
-const EventEmitter = require('events');
 
 function method(arg) {
   return 'r2';
@@ -9,7 +8,7 @@ function method(arg) {
 
 let object = { method };
 
-test('t.context.stub()', t => {
+test.serial('t.context.stub()', t => {
   let s = t.context.stub((...args) => {
     if (s.calls.length === 0) { t.deepEqual(args, ['a1']); return 'r1'; }
     if (s.calls.length === 1) { t.deepEqual(args, ['a2']); return 'r2'; }
@@ -37,7 +36,7 @@ test('t.context.stub()', t => {
   t.throws(s)
 });
 
-test('t.context.spy()', t => {
+test.serial('t.context.spy()', t => {
   let s = t.context.spy(object, 'method', (...args) => {
     if (s.calls.length === 0) { t.deepEqual(args, ['a1']); return 'r1'; }
     if (s.calls.length === 1) { t.deepEqual(args, ['a2']); return s.original(...args); }
@@ -60,6 +59,6 @@ test('t.context.spy()', t => {
   t.is(object.method(), 'r2')
 });
 
-test('t.context.spy() restored after test', t => {
+test.serial('t.context.spy() restored after test', t => {
   t.is(object.method, method);
 });
