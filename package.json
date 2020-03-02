@@ -22,10 +22,10 @@
     "test": "ava"
   },
   "peerDependencies": {
-    "ava": "^1.4.1"
+    "ava": "^3.5.0"
   },
   "devDependencies": {
-    "ava": "^1.4.1",
-    "flow-bin": "^0.73.0"
+    "ava": "^3.5.0",
+    "flow-bin": "^0.119.1"
   }
 }
